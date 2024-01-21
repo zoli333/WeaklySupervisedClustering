@@ -11,7 +11,7 @@ Also now support mnist (mnist package installation required) training.
 - mnist (optional for train_mnist.py)
 
 ## Running the repo
-Run train_toy.py
+Run train_toy.py or train_mnist.py (mnist package required)
 
 ## Result (on toy dataset)
 
