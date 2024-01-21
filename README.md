@@ -29,4 +29,4 @@ Original implementation in Matlab:
 ### https://github.com/zkl20061823/WSC
 
 # Bonus:
-Adam Optimizer added
+Adam Optimizer added, with amsgrad (default to True)
