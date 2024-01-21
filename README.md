@@ -4,8 +4,8 @@ Implements train_toy.py where the toy dataset and makemoons (sklearn) generated 
 Also now support mnist (mnist package installation required) training.
 
 ## Requirements
-- scipy,
-- numpy,
+- scipy
+- numpy
 - python 3.*
 - sklearn
 - mnist (optional for train_mnist.py)
