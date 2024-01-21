@@ -3,6 +3,9 @@ Python Implementation of:
 
 # Learning Facial Action Units from Web Images with Scalable Weakly Supervised Clustering
 
+## Running the repo
+Run train.py
+
 Original implementation in Matlab:
 ### https://github.com/zkl20061823/WSC
 
