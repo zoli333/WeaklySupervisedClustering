@@ -53,5 +53,5 @@ cost, clusters, W = wse(L=L, Wt=Wt, V=V, groups=groups, eta=eta, gamma=gamma, la
 last_t = list(clusters)[-1]
 plt.scatter(x[:, 0], x[:, 1], c=clusters[last_t])
 plt.axis('off')
-plt.savefig('result.png')
+plt.savefig('result_toy.png')
 plt.show()

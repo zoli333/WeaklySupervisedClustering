@@ -20,7 +20,7 @@ def get_graph(X, k, graph_type='mutual_knn'):
     # Create directed neighbor graph
     for iRow in range(n):
         idx = np.argsort(dist[iRow, :])
-        isnn[iRow, idx[0:k+1]] = True
+        isnn[iRow, idx[0:k]] = True
 
     # print("dist", dist[isnn])
     # print("isnn", isnn.nonzero())
