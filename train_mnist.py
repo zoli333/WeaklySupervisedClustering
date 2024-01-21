@@ -64,7 +64,7 @@ Wt = W0
 V = Wt
 
 # run wse
-cost, clusters, W = wse(L=L, Wt=Wt, V=V, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
+cost, clusters, W = wse(L=L, Wt=Wt, V=V, maxiter=2000, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
 
 last_t = list(clusters)[-1]
 clusters = clusters[last_t]
@@ -83,8 +83,3 @@ for cluster in c:
         i += 1
 plt.close()
 
-
-# plt.scatter(x[:, 0], x[:, 1], c=clusters[last_t])
-# plt.axis('off')
-# plt.savefig('result_mnist.png')
-# plt.show()
