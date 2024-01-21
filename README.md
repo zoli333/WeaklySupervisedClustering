@@ -2,11 +2,11 @@
 A Python implementation
 
 ## Requirements
-scipy,
-numpy,
-python 3.*
-sklearn
-mnist (optional for train_mnist.py)
+- scipy,
+- numpy,
+- python 3.*
+- sklearn
+- mnist (optional for train_mnist.py)
 
 ## Running the repo
 Run train_toy.py
