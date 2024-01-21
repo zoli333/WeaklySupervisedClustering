@@ -1,10 +1,12 @@
-## WeaklySupervisedClustering
-Python Implementation of:
-
-# Learning Facial Action Units from Web Images with Scalable Weakly Supervised Clustering
+## Learning Facial Action Units from Web Images with Scalable Weakly Supervised Clustering
+A Python implementation
 
 ## Running the repo
 Run train.py
+
+## Result (on toy dataset)
+
+![result.png](https://github.com/zoli333/WeaklySupervisedClustering/blob/main/result.png)
 
 ## References
 Article
