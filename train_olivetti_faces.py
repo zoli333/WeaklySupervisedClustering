@@ -1,5 +1,6 @@
+from numpy.random import RandomState
+from sklearn.datasets import fetch_olivetti_faces
 import matplotlib.pyplot as plt
-import mnist
 import numpy as np
 from scipy import sparse
 import scipy.linalg as linalg
@@ -9,36 +10,34 @@ from get_graph import get_graph
 import os
 
 
-train_images = mnist.train_images()
-train_labels = mnist.train_labels()
+rng = RandomState(0)
 
-test_images = mnist.test_images()
-test_labels = mnist.test_labels()
+faces, labels = fetch_olivetti_faces(return_X_y=True, shuffle=True, random_state=rng)
+n_samples, n_features = faces.shape
 
-x = np.reshape(train_images, (train_images.shape[0], -1))
-y = train_labels
-labels = [0, 6]
+# centering
 
-inds = []
-for l in labels:
-    inds.append(np.argwhere(l == train_labels)[:, 0])
-inds = np.concatenate(inds)
-np.random.shuffle(inds)
+# Global centering (focus on one feature, centering all samples)
+faces_centered = faces - faces.mean(axis=0)
 
-x = x[inds, :]
-y = y[inds]
+# Local centering (focus on one sample, centering all features)
+faces_centered -= faces_centered.mean(axis=1).reshape(n_samples, -1)
 
-n = 500
-x = x[:n]
-y = y[:n]
+y = np.bincount(labels)
+ii = np.nonzero(y)[0]
+print(np.vstack((ii,y[ii])).T)
+
+x = faces_centered
+y = labels
+
 
 lam = 0.3413
 eta = 0.1
 gamma = 0.9
-num_clusters = 2
+num_clusters = 40
 
 
-A = get_graph(x, k=10)
+A = get_graph(x, k=100)
 
 degs = A.sum(axis=1)
 D = sparse.spdiags(degs.A.ravel(), 0, A.shape[0], A.shape[1])
@@ -70,7 +69,7 @@ last_t = list(clusters)[-1]
 clusters = clusters[last_t]
 c = np.unique(clusters)
 for cluster in c:
-    savename = "result_mnist/cluster_" + str(cluster)
+    savename = "result_olivetti_faces/cluster_" + str(cluster)
     os.makedirs(savename, exist_ok=True)
     label = np.argwhere(clusters == cluster)
     label = label[:30]
@@ -78,7 +77,7 @@ for cluster in c:
     i = 0
     print("creating images for cluster: " + str(cluster))
     for img in cluster_x:
-        img = img.reshape((28, 28))
+        img = img.reshape((64, 64))
         plt.imshow(img, cmap='gray')
         plt.axis('off')
         plt.savefig(savename + '/img' + str(i) + '.png')
