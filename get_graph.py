@@ -7,7 +7,7 @@ from scipy.sparse import csr_matrix, coo_matrix, lil_matrix
 
 def sim_gaussian(x, sigma):
     inds = x.nonzero()
-    d = np.exp((-x.toarray()**2 / (2 * sigma ** 2)))
+    d = np.exp(-x.toarray()**2 / (2 * sigma ** 2))
     knndist = coo_matrix((d[inds], inds), shape=(x.shape[0], x.shape[1]))
     return knndist
 
@@ -20,7 +20,7 @@ def get_graph(X, k, graph_type='mutual_knn'):
     # Create directed neighbor graph
     for iRow in range(n):
         idx = np.argsort(dist[iRow, :])
-        isnn[iRow, idx[0:k]] = True
+        isnn[iRow, idx[0:k+1]] = True
 
     # print("dist", dist[isnn])
     # print("isnn", isnn.nonzero())
@@ -29,7 +29,7 @@ def get_graph(X, k, graph_type='mutual_knn'):
         knndist = knndist.minimum(knndist.transpose())
     elif graph_type == 'knn':
         knndist = knndist.maximum(knndist.transpose())
-
+    print(knndist[isnn])
     sigma = np.median(knndist[isnn].A.ravel())  # Gaussian parameter
     A = sim_gaussian(knndist, sigma)
 
@@ -47,3 +47,13 @@ if __name__ == '__main__':
     A = get_graph(x,  k=k)
     print(A.A.ravel())
 
+    # matlab
+    # A = [5, 2, 1, 3, 4, 5, 2, 1, 2, 3, 4, 5];
+    # k = 2;
+    # A(1: k + 1);
+    # result: [5, 2, 1]
+    # python
+    A = np.array([5, 2, 1, 3, 4, 5, 2, 1, 2, 3, 4, 5])
+    k = 2
+    print(A[0:k+1])
+    # [5, 2, 1]
