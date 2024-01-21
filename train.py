@@ -6,7 +6,7 @@ from scipy import sparse
 import scipy.linalg as linalg
 from utils import perturb_labels
 from wse import wse
-from get_graph import get_graph2 as get_graph
+from get_graph import get_graph
 
 lam = 0.3413
 eta = 0.1

@@ -12,7 +12,7 @@ def sim_gaussian(x, sigma):
     return knndist
 
 
-def get_graph2(X, k, graph_type='mutual_knn'):
+def get_graph(X, k, graph_type='mutual_knn'):
     dist = squareform(pdist(X))
     n = dist.shape[0]
     isnn = np.zeros((n, n), dtype=bool)
@@ -44,6 +44,6 @@ if __name__ == '__main__':
          [1.360070, -1.081047, 1.109594, -0.488779, -0.035228, 0.072544, 0.824734, 1.534444, -0.396467, -1.771091]]
     )
     x = x.transpose()
-    A = get_graph2(x,  k=k)
+    A = get_graph(x,  k=k)
     print(A.A.ravel())
 
