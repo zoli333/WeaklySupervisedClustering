@@ -7,6 +7,8 @@ Python Implementation of:
 Run train.py
 
 ## References
+Article
+### https://openaccess.thecvf.com/content_cvpr_2018/papers/Zhao_Learning_Facial_Action_CVPR_2018_paper.pdf
 Original implementation in Matlab:
 ### https://github.com/zkl20061823/WSC
 
