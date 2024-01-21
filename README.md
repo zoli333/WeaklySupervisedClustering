@@ -1,5 +1,14 @@
 ## Learning Facial Action Units from Web Images with Scalable Weakly Supervised Clustering
 A Python implementation
+Implements train_toy.py where the toy dataset and makemoons (sklearn) generated datasets can be runned.
+Also now support mnist (mnist package installation required) training.
+
+## Requirements
+- scipy,
+- numpy,
+- python 3.*
+- sklearn
+- mnist (optional for train_mnist.py)
 
 ## Running the repo
 Run train_toy.py
