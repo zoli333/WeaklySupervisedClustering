@@ -76,24 +76,24 @@ def wse(L, Wt, V, groups, maxiter=1000, tol=1e-5, eta=0.01, gamma=0.01, lam=0.3,
         # Wt = W_prev - gamma * Wt
 
         # adaptive sgd
-        # at = 2. / (t + 3.)
-        # Wt = Wt + (1 - a_prev) / a_prev * at * (Wt - W_prev)
-        # a_prev = at
-        # Wt = linalg.orth(Wt)
-
-        # adam
-        # gradient
-        delta = Wt - W_prev
-        m = beta1 * m + (1 - beta1) * delta
-        v = beta2 * v + (1.0 - beta2) * delta ** 2
-        mhat = m / (1.0 - beta1 ** (t + 1))
-        vhat = v / (1.0 - beta2 ** (t + 1))
-        if amsgrad:
-            vt_max = np.maximum(vt_max, vhat)
-            Wt = Wt - gamma * mhat / (np.sqrt(vt_max) + eps)
-        else:
-            Wt = Wt - gamma * mhat / (np.sqrt(vhat) + eps)
+        at = 2. / (t + 3.)
+        Wt = Wt + (1 - a_prev) / a_prev * at * (Wt - W_prev)
+        a_prev = at
         Wt = linalg.orth(Wt)
+
+        # Adam
+        # gradient
+        # delta = Wt - W_prev
+        # m = beta1 * m + (1 - beta1) * delta
+        # v = beta2 * v + (1.0 - beta2) * delta ** 2
+        # mhat = m / (1.0 - beta1 ** (t + 1))
+        # vhat = v / (1.0 - beta2 ** (t + 1))
+        # if amsgrad:
+        #     vt_max = np.maximum(vt_max, vhat)
+        #     Wt = Wt - gamma * mhat / (np.sqrt(vt_max) + eps)
+        # else:
+        #     Wt = Wt - gamma * mhat / (np.sqrt(vhat) + eps)
+        # Wt = linalg.orth(Wt)
 
         if (t + 1) % 1 == 0:
             print(t, obj[t], cost_q)

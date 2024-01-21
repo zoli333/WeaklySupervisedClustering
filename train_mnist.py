@@ -17,7 +17,7 @@ test_labels = mnist.test_labels()
 
 x = np.reshape(train_images, (train_images.shape[0], -1))
 y = train_labels
-labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+labels = [0, 6]
 
 inds = []
 for l in labels:
@@ -28,14 +28,14 @@ np.random.shuffle(inds)
 x = x[inds, :]
 y = y[inds]
 
-n = 1000
+n = 500
 x = x[:n]
 y = y[:n]
 
 lam = 0.3413
 eta = 0.1
 gamma = 0.9
-num_clusters = 10
+num_clusters = 2
 
 
 A = get_graph(x, k=10)
@@ -64,7 +64,7 @@ Wt = W0
 V = Wt
 
 # run wse
-cost, clusters, W = wse(L=L, Wt=Wt, V=V, maxiter=10000, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
+cost, clusters, W = wse(L=L, Wt=Wt, V=V, maxiter=2000, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
 
 last_t = list(clusters)[-1]
 clusters = clusters[last_t]
@@ -85,5 +85,4 @@ for cluster in c:
         i += 1
     print("-- finished creating images for cluster: " + str(cluster))
     plt.close()
-
 plt.close()
