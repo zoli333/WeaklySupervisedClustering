@@ -2,7 +2,7 @@
 A Python implementation
 
 ## Running the repo
-Run train.py
+Run train_toy.py
 
 ## Result (on toy dataset)
 
