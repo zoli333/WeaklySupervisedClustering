@@ -11,10 +11,11 @@ Also now support mnist (mnist package installation required) training.
 - mnist (optional for train_mnist.py)
 
 ## Running the repo
+
 Run either of these files
-  train_toy.py (default)
-  train_mnist.py (mnist package required)
-  train_olivetti_faces.py (faces database - https://scikit-learn.org/stable/auto_examples/decomposition/plot_faces_decomposition.html)
+  -- train_toy.py (default)
+  -- train_mnist.py (mnist package required)
+  -- train_olivetti_faces.py (faces database - https://scikit-learn.org/stable/auto_examples/decomposition/plot_faces_decomposition.html)
 
 ## Result (on toy dataset)
 
