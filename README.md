@@ -15,4 +15,4 @@ Original implementation in Matlab:
 ### https://github.com/zkl20061823/WSC
 
 # Bonus:
-Adam Optimizer added to the source code
+Adam Optimizer added
