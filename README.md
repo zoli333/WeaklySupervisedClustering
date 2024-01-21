@@ -1,6 +1,13 @@
 ## Learning Facial Action Units from Web Images with Scalable Weakly Supervised Clustering
 A Python implementation
 
+## Requirements
+scipy,
+numpy,
+python 3.*
+sklearn
+mnist (optional for train_mnist.py)
+
 ## Running the repo
 Run train_toy.py
 
