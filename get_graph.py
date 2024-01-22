@@ -22,8 +22,6 @@ def get_graph(X, k, graph_type='mutual_knn'):
         idx = np.argsort(dist[iRow, :])
         isnn[iRow, idx[0:k+1]] = True
 
-    # print("dist", dist[isnn])
-    # print("isnn", isnn.nonzero())
     knndist = csr_matrix((dist[isnn], isnn.nonzero()), shape=(n, n))
     if graph_type == 'mutual_knn':
         knndist = knndist.minimum(knndist.transpose())
