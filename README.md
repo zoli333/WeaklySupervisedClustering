@@ -22,7 +22,7 @@ Run either of these files
 
 ## Result (on toy dataset)
 
-![result.png](https://github.com/zoli333/WeaklySupervisedClustering/blob/main/result.png)
+![result.png](https://github.com/zoli333/WeaklySupervisedClustering/blob/main/result_toy.png)
 
 ## References
 Article
