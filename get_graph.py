@@ -29,7 +29,7 @@ def get_graph(X, k, graph_type='mutual_knn'):
         knndist = knndist.minimum(knndist.transpose())
     elif graph_type == 'knn':
         knndist = knndist.maximum(knndist.transpose())
-    print(knndist[isnn])
+
     sigma = np.median(knndist[isnn].A.ravel())  # Gaussian parameter
     A = sim_gaussian(knndist, sigma)
 
