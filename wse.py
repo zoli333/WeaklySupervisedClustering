@@ -10,7 +10,6 @@ def wse(L, Wt, V, groups, maxiter=1000, tol=1e-5, eta=0.01, gamma=0.01, lam=0.3,
     a0, t = 1., 1
     obj = np.zeros(maxiter)
     n = Wt.shape[0]
-    Ct = {}
     is_convergence = False
     G = np.unique(groups)
     a_prev = a0
@@ -31,13 +30,11 @@ def wse(L, Wt, V, groups, maxiter=1000, tol=1e-5, eta=0.01, gamma=0.01, lam=0.3,
         if t > 2:
             if np.abs(obj[t] - obj[t-1]) < tol:
                 print("converged")
-                kmeans.fit(Wt)
-                Ct[t] = kmeans.labels_
                 is_convergence = True
                 break
             elif obj[t] > obj[t-1]:
-                print(t, obj[t], obj[t-1])
                 print("obj started increasing")
+                print("last losses: ", t, obj[t], obj[t - 1])
                 is_convergence = True
                 break
         cost_q = objective_QL(Wt, V, L, groups, lam, eta)
@@ -45,9 +42,10 @@ def wse(L, Wt, V, groups, maxiter=1000, tol=1e-5, eta=0.01, gamma=0.01, lam=0.3,
         if obj[t] > cost_q:
             eta = gamma * eta
 
-        W_prev = Wt
+        W_prev = Wt.copy()
 
         V = Wt - eta*(2.*L.dot(Wt))
+
         # update Wt
         if W_update_type == 'standard':
             for i in range(len(G)):
@@ -74,6 +72,7 @@ def wse(L, Wt, V, groups, maxiter=1000, tol=1e-5, eta=0.01, gamma=0.01, lam=0.3,
 
         # sgd
         # Wt = W_prev - gamma * Wt
+        # Wt = linalg.orth(Wt)
 
         # adaptive sgd
         at = 2. / (t + 3.)
@@ -95,15 +94,10 @@ def wse(L, Wt, V, groups, maxiter=1000, tol=1e-5, eta=0.01, gamma=0.01, lam=0.3,
         #     Wt = Wt - gamma * mhat / (np.sqrt(vhat) + eps)
         # Wt = linalg.orth(Wt)
 
-        if (t + 1) % 1 == 0:
+        if (t + 1) % 20 == 0:
             print(t, obj[t], cost_q)
-
-        # get clusters
-        if (t + 1) % 50 == 0:
-            kmeans.fit(Wt)
-            Ct[t] = kmeans.labels_
 
         t += 1
 
-    return obj, Ct, Wt
+    return obj, Wt
 

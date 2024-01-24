@@ -7,6 +7,7 @@ import scipy.linalg as linalg
 from utils import perturb_labels
 from wse import wse
 from get_graph import get_graph
+from sklearn.cluster import KMeans
 
 lam = 0.3413
 eta = 0.1
@@ -44,14 +45,17 @@ groups = perturb_labels(y, psnr=0.3)
 
 n = L.shape[0]
 W0 = linalg.orth(np.random.random(size=(n, num_clusters)))
-Wt = W0
-V = Wt
+Wt = W0.copy()
+V = Wt.copy()
 
 # run wse
-cost, clusters, W = wse(L=L, Wt=Wt, V=V, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
+cost, W = wse(L=L, Wt=Wt, V=V, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
 
-last_t = list(clusters)[-1]
-plt.scatter(x[:, 0], x[:, 1], c=clusters[last_t])
+kmeans = KMeans(n_clusters=num_clusters, n_init='auto')
+kmeans.fit(W)
+clusters = kmeans.labels_
+c = np.unique(clusters)
+plt.scatter(x[:, 0], x[:, 1], c=clusters)
 plt.axis('off')
 plt.savefig('result_toy.png')
 plt.show()

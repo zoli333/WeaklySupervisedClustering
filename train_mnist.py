@@ -7,6 +7,7 @@ from utils import perturb_labels
 from wse import wse
 from get_graph import get_graph
 import os
+from sklearn.cluster import KMeans
 
 
 train_images = mnist.train_images()
@@ -34,11 +35,11 @@ y = y[:n]
 
 lam = 0.3413
 eta = 0.1
-gamma = 0.9
+gamma = 0.001
 num_clusters = 2
 
 
-A = get_graph(x, k=10)
+A = get_graph(x, k=20)
 
 degs = A.sum(axis=1)
 D = sparse.spdiags(degs.A.ravel(), 0, A.shape[0], A.shape[1])
@@ -60,20 +61,22 @@ groups = perturb_labels(y, psnr=0.3)
 
 n = L.shape[0]
 W0 = linalg.orth(np.random.random(size=(n, num_clusters)))
-Wt = W0
-V = Wt
+Wt = W0.copy()
+V = Wt.copy()
 
 # run wse
-cost, clusters, W = wse(L=L, Wt=Wt, V=V, maxiter=2000, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
+cost, W = wse(L=L, Wt=Wt, V=V, maxiter=2000, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
 
-last_t = list(clusters)[-1]
-clusters = clusters[last_t]
+kmeans = KMeans(n_clusters=num_clusters, n_init='auto')
+kmeans.fit(W)
+clusters = kmeans.labels_
 c = np.unique(clusters)
 for cluster in c:
     savename = "result_mnist/cluster_" + str(cluster)
     os.makedirs(savename, exist_ok=True)
     label = np.argwhere(clusters == cluster)
     label = label[:30]
+    print("x", x.shape)
     cluster_x = x[label, :]
     i = 0
     print("creating images for cluster: " + str(cluster))

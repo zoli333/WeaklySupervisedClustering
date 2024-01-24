@@ -7,7 +7,7 @@ from scipy.sparse import csr_matrix, coo_matrix, lil_matrix
 
 def sim_gaussian(x, sigma):
     inds = x.nonzero()
-    d = np.exp(-x.toarray()**2 / (2 * sigma ** 2))
+    d = np.exp(-(x.A)**2 / (2 * sigma ** 2))
     knndist = coo_matrix((d[inds], inds), shape=(x.shape[0], x.shape[1]))
     return knndist
 

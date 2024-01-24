@@ -8,6 +8,7 @@ from utils import perturb_labels
 from wse import wse
 from get_graph import get_graph
 import os
+from sklearn.cluster import KMeans
 
 
 rng = RandomState(0)
@@ -59,14 +60,15 @@ groups = perturb_labels(y, psnr=0.3)
 
 n = L.shape[0]
 W0 = linalg.orth(np.random.random(size=(n, num_clusters)))
-Wt = W0
-V = Wt
+Wt = W0.copy()
+V = Wt.copy()
 
 # run wse
-cost, clusters, W = wse(L=L, Wt=Wt, V=V, maxiter=2000, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
+cost, W = wse(L=L, Wt=Wt, V=V, maxiter=2000, groups=groups, eta=eta, gamma=gamma, lam=lam, num_clusters=num_clusters, W_update_type='fast')
 
-last_t = list(clusters)[-1]
-clusters = clusters[last_t]
+kmeans = KMeans(n_clusters=num_clusters, n_init='auto')
+kmeans.fit(W)
+clusters = kmeans.labels_
 c = np.unique(clusters)
 for cluster in c:
     savename = "result_olivetti_faces/cluster_" + str(cluster)
