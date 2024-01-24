@@ -35,7 +35,7 @@ y = y[:n]
 
 lam = 0.3413
 eta = 0.1
-gamma = 0.001
+gamma = 0.9
 num_clusters = 2
 
 
