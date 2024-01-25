@@ -1,5 +1,4 @@
 import numpy as np
-from sklearn.cluster import KMeans
 from objective_wse import objective_wse
 from objective_QL import objective_QL
 import scipy.linalg as linalg
@@ -13,7 +12,6 @@ def wse(L, Wt, V, groups, maxiter=1000, tol=1e-5, eta=0.01, gamma=0.01, lam=0.3,
     is_convergence = False
     G = np.unique(groups)
     a_prev = a0
-    kmeans = KMeans(n_clusters=num_clusters, n_init='auto')
     # ------ adam optimizer parameters ------
     eps = 1e-8
     beta1 = 0.9
